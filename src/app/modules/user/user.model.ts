@@ -4,7 +4,13 @@ import { model, Schema } from 'mongoose';
 import config from '../../../config';
 import { USER_ROLES } from '../../../enums/user';
 import ApiError from '../../../errors/ApiError';
-import { IUser, UserModal } from './user.interface';
+import { IAuthProvider, IUser, UserModal } from './user.interface';
+
+const authProviderSchema = new Schema<IAuthProvider>({
+  provider: { type: String, required: true },
+  providerId: { type: String, required: true },
+});
+
 
 const userSchema = new Schema<IUser, UserModal>(
   {
@@ -33,6 +39,7 @@ const userSchema = new Schema<IUser, UserModal>(
       select: 0,
       minlength: 8,
     },
+    auths:[authProviderSchema],
     image: {
       type: String,
       default: 'https://i.ibb.co/z5YHLV9/profile.png',

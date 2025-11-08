@@ -1,6 +1,11 @@
 import { Model } from 'mongoose';
 import { USER_ROLES } from '../../../enums/user';
 
+export interface IAuthProvider {
+  provider: 'google' | 'credentials';
+  providerId: string;
+}
+
 export type IUser = {
   name: string;
   role: USER_ROLES;
@@ -11,6 +16,7 @@ export type IUser = {
   bio?: string;
   status: 'Active' | 'Blocked';
   verified: boolean;
+  auths:IAuthProvider[];
 
   personalInfo?: {
     firstName?: string;
@@ -27,11 +33,11 @@ export type IUser = {
   };
   // StripeAccountInfo
   stripeAccountInfo?: {
-    stripeCustomerId?: string; 
+    stripeCustomerId?: string;
     loginUrl?: string;
   } | null;
   location?: string;
-  joinedDate:Date;
+  joinedDate: Date;
   authentication?: {
     isResetPassword: boolean;
     oneTimeCode: number | null;
