@@ -16,7 +16,7 @@ export type IUser = {
   bio?: string;
   status: 'Active' | 'Blocked';
   verified: boolean;
-  auths:IAuthProvider[];
+  auths: IAuthProvider[];
 
   personalInfo?: {
     firstName?: string;
@@ -43,7 +43,7 @@ export type IUser = {
     oneTimeCode: number | null;
     expireAt: Date | null;
   };
-    createdAt?: Date;
+  createdAt?: Date;
   updatedAt?: Date;
 };
 
