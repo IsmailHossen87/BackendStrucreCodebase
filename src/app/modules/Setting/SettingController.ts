@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import { SettingService } from "./SettingService";
+import { SettingService } from "./Setting.Service";
 
 
 // Create or update
 const upsertSettings = async (req: Request, res: Response) => {
   try {
-    const data = req.body; // { privacyPolicy, cookiePolicy, refundPolicy, shippingPolicy }
+    const data = req.body;
     const result = await SettingService.upsertSettings(data);
     res.status(StatusCodes.OK).json({
       success: true,
@@ -37,10 +37,10 @@ const getAllSettings = async (req: Request, res: Response) => {
     });
   }
 };
-// Get settings
+// Get Single settings
 const specificSetting = async (req: Request, res: Response) => {
   try {
-    const key = req.params.key; // URL থেকে key নেওয়া
+    const key = req.params.key; 
     const result = await SettingService.getSpecificSetting(key);
     if (!result) {
       return res.status(StatusCodes.NOT_FOUND).json({

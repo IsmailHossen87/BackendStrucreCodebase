@@ -20,7 +20,7 @@ import { redisClient } from '../../../config/radisConfig';
 import { IUser } from '../user/user.interface';
 
 
-const OTP_EXPIRATION = 5 * 60; // 5 minutes
+const OTP_EXPIRATION = 5 * 60;
 
 
 // Login User
@@ -59,7 +59,21 @@ const loginUserFromDB = async (payload: ILoginData) => {
 
   return { createToken };
 };
+const resendOTP = async(email:string)=>{
+  const isExistUser = await User.findOne({ email });
+  if (!isExistUser) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, "User doesn't exist!");
+  } 
+  const otp = generateOTP(); 
+  const redisKey = `otp:verify:${email}`;
+  await redisClient.setEx(redisKey, OTP_EXPIRATION, otp.toString());
 
+  const values = { otp, email: isExistUser.email }; 
+  const verifyEmailTemplate = emailTemplate.resendOtpTemplate(values);
+  await emailHelper.sendEmail(verifyEmailTemplate);
+
+
+}
 
 // Verify Email or OTP
 
@@ -245,4 +259,5 @@ const changePasswordToDB = async (
   forgetPasswordToDB,
   resetPasswordToDB,
   changePasswordToDB,
+  resendOTP
 };

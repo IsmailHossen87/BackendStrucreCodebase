@@ -1,14 +1,15 @@
-import { ISettings, Settings } from "./Setting.Mode";
+import { ISettings, Settings } from "./Setting.model";
+
 
 // Create or update single settings document
 const upsertSettings = async (data: ISettings) => {
-  const result = await Settings.findOneAndUpdate(
-    {},        // find any existing document
-    data,      // update with new data
-    { upsert: true, new: true } // create if doesn't exist
-  );
+  const result = await Settings.findOneAndUpdate({}, data, {
+    upsert: true,
+    new: true
+  });
   return result;
 };
+
 
 // Get all settings (single document)
 const getSettings = async () => {

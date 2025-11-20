@@ -68,31 +68,41 @@ const donationConfirmation = (values: {
 };
 
 
-// const raffleConfirmation = (values: {name:string,email:string,totalTicket:string,raffleNumbers:string}) => {
-//   const data = {
-//     to: values.email,
-//     subject: 'Raffle Purchase Confirmation',
-//     html: `<body style="font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 50px; padding: 20px; color: #555;">
-//       <div style="width: 100%; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #fff; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
-//           <img src="https://ibb.co.com/HDN60nqv" alt="FundRaise Logo" style="display: block; margin: 0 auto 20px; width:150px" />
-//           <h2 style="color: #277E16; font-size: 24px; margin-bottom: 20px;">Hello ${values.name}, Your Raffle Purchase is Confirmed!</h2>
-//           <div style="text-align: center;">
-//               <p style="color: #555; font-size: 16px; line-height: 1.5; margin-bottom: 20px;">You have successfully purchased <strong>${values.totalTicket}</strong> raffle ticket(s) for <strong>${values.raffleName}</strong>.</p>
-//               <p style="color: #555; font-size: 16px; line-height: 1.5; margin-bottom: 20px;">Your raffle numbers: <strong>${values.raffleNumbers.join(', ')}</strong></p>
-//               <p style="color: #555; font-size: 16px; line-height: 1.5; margin-bottom: 20px;">Good luck! Keep an eye on your email for raffle results.</p>
-//           </div>
-//           <p style="color: #555; font-size: 14px; line-height: 1.5;">If you did not make this purchase, please contact our support immediately.</p>
-//       </div>
-//     </body>`,
-//   };
-//   return data;
-// };
+const resendOtpTemplate = (values: { otp: string | number; email: string }) => {
+  return {
+    to: values.email,
+    subject: "Your OTP Code - MainLand Verification",
+    html: `
+      <body style="font-family: Arial; background:#f6f6f6; padding:20px;">
+        <div style="max-width:600px; margin:auto; background:white; padding:25px; border-radius:10px;">
+          
+          <div style="text-align:center;">
+            <img src="https://ibb.co.com/gLb5SyJ5" alt="MainLand Logo" style="width:140px;" />
+          </div>
+
+          <h2 style="color:#277E16; text-align:center;">Your Resent OTP Code</h2>
+
+          <p style="text-align:center;">Use the code below to continue verifying your MainLand account.</p>
+
+          <div style="text-align:center; margin:25px 0;">
+            <div style="display:inline-block; background:#277E16; color:white; padding:15px 25px; border-radius:8px; font-size:28px; font-weight:bold; letter-spacing:3px;">
+              ${values.otp}
+            </div>
+          </div>
+
+          <p style="text-align:center; color:#666;">This OTP will expire in <strong>5 minutes</strong>.</p>
+        </div>
+      </body>
+    `,
+  };
+};
 
 export const emailTemplate = {
   createAccount,
   resetPassword,
   donationConfirmation,
   // raffleConfirmation,
+  resendOtpTemplate,
 };
 
 
